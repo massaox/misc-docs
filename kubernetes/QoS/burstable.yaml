@@ -1,0 +1,15 @@
+# When limits are set on the container definition but are not equal to requests
+# the Pod will receive a Quality of service Burstable.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: burstable-pod 
+spec:
+  containers:
+  - image: gcr.io/jetstack-workshops/kuard-amd64:blue 
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "64Mi"
+      limits:
+        memory: "128Mi"

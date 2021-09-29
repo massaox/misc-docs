@@ -1,0 +1,25 @@
+# This example mounts both keys of the configMaps in the path /var/log_config
+# on the container.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: log-var
+data:
+  LOG_LEVEL: debug
+  ENVIRONMENT: staging
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: logvolume-pod
+spec:
+  volumes:
+  - name: log-volume
+    configMap:
+      name: log-var
+  containers:
+  - image: gcr.io/jetstack-workshops/kuard-amd64:blue 
+    name: demo
+    volumeMounts:
+    - name: log-volume
+      mountPath: /var/log_config

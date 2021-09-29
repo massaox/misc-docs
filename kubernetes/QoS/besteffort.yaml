@@ -1,0 +1,14 @@
+# When no limits are set on the container definition the Pod will receive a Quality
+# of service BestEffort.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: besteffort-pod 
+spec:
+  containers:
+  - image: gcr.io/jetstack-workshops/kuard-amd64:blue 
+    name: test
+    resources:
+      requests:
+        cpu: "100m"
+

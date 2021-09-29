@@ -1,0 +1,17 @@
+# When both requests and limits are set on the container definition and they are
+# both the same the Pod will receive a Quality of service Guaranteed.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: guaranteed-pod 
+spec:
+  containers:
+  - image: gcr.io/jetstack-workshops/kuard-amd64:blue 
+    name: test
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "64Mi"
+      limits:
+        cpu: "100m"
+        memory: "64Mi"

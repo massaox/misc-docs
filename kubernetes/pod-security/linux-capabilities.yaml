@@ -1,0 +1,24 @@
+# You can install libcap2-bin to use getpcaps to list the Linux capabilities of 
+# certain process.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ubuntu-pod
+  labels:
+    app: test
+spec:
+  containers:
+  - image: ubuntu:latest 
+    name: test
+    command: ["/bin/bash", "-c", "sleep 3000"]
+    securityContext:
+      allowPrivilegeEscalation: true
+      privileged: true
+      capabilities:
+        add:
+        - NET_RAW
+        drop:
+        - ALL
+  - image: ubuntu:latest 
+    name: test2
+    command: ["/bin/bash", "-c", "sleep 3000"]

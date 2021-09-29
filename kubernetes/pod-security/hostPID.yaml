@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hostpid-pod
+spec:
+  hostPID: true
+  containers:
+  - image: centos:8
+    name: hostpid
+    command: ["/bin/bash", "-c", "sleep 3000"]
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nohostpid-pod
+spec:
+  hostPID: false
+  containers:
+  - image: centos:8
+    name: nohostpid
+    command: ["/bin/bash", "-c", "sleep 3000"]

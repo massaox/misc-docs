@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hostnetwork-pod
+spec:
+  hostNetwork: true
+  containers:
+  - image: centos:8
+    name: test
+    command: ["/bin/bash", "-c", "sleep 3000"]
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nohostnetwork-pod
+spec:
+  hostNetwork: false
+  containers:
+  - image: centos:8
+    name: test
+    command: ["/bin/bash", "-c", "sleep 3000"]

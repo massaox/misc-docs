@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: privileged
+spec:
+  hostPID: true
+  hostNetwork: true
+  hostIPC: true
+  volumes:
+  - name: test-volume
+    hostPath: 
+      path: /etc
+  containers:
+  - image: centos:8
+    name: test
+    command: ["/bin/sh", "-c", "sleep 300"]
+    volumeMounts:
+    - name: test-volume
+      mountPath: /hostpathtest
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nonprivileged
+spec:
+  hostPID: false
+  hostNetwork: false
+  containers:
+  - image: centos:8
+    name: test
+    command: ["/bin/sh", "-c", "sleep 300"]
+    securityContext:
+      runAsUser: 65534 # user nobody

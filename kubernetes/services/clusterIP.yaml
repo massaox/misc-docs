@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: clusterip-demo 
+spec:
+  type: ClusterIP
+  selector:
+    app: demo
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+      name: http
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: demo-1
+  labels:
+    app: demo
+spec:
+  containers:
+  - image: raftx/sample-web:v1
+    name: test
+    ports:
+    - containerPort: 8080
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: demo-2
+  labels:
+    app: demo
+spec:
+  containers:
+  - image: raftx/sample-web:v1
+    name: test
+    ports:
+    - containerPort: 8080
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test
+spec:
+  containers:
+  - image: curlimages/curl:latest
+    name: test
+    command: ["/bin/sh", "-c", "sleep 3000"]

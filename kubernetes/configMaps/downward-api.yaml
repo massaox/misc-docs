@@ -1,0 +1,22 @@
+# This example makes use of the downwardAPI volume plugin to mount metada information
+# about the Pod itself on the container.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: logvolume-pod
+spec:
+  restartPolicy: Never
+  volumes:
+  - name: podinfo
+    downwardAPI:
+      items:
+      - path: "labels"
+        fieldRef:
+          fieldPath: metadata.labels
+  containers:
+  - image: centos:8 
+    name: demo
+    command: ["/bin/bash", "-c", "sleep 3000"]
+    volumeMounts:
+    - name: podinfo
+      mountPath: /etc/podinfo
