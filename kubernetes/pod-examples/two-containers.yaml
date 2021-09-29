@@ -10,6 +10,7 @@ spec:
   - image: centos:8 
     name: test1
     command: ["/bin/bash", "-c", "echo 'I am TEST 1'; sleep 3000"]
+  - image: centos:8
     name: test2
     command: ["/bin/bash", "-c", "echo 'I am TEST 2'; sleep 1000"]
  
