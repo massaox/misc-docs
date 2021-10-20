@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: low
+  labels:
+    app: low
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: low
+  template:
+    metadata:
+      labels:
+        app: low
+    spec:
+      priorityClassName: low-priority
+      containers:
+      - name: low
+        image: k8s.gcr.io/pause
+        resources:
+          requests: 
+            cpu: 700m
+          limits:
+            cpu: 800m

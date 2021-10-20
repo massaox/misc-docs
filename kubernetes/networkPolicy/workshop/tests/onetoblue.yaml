@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: onetoblue
+  namespace: colors
+spec:
+  podSelector:
+    matchLabels:
+      color: blue
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          number: one
+      namespaceSelector:
+        matchLabels:
+          ns: numbers

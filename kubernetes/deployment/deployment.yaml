@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-deployment
+  labels:
+    app: demo
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: demo
+  template:
+    metadata:
+      labels:
+        app: demo
+    spec:
+      containers:
+      - name: demo-app
+        image: gcr.io/jetstack-workshops/sample-web:v1
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "64Mi"
+          limits: 
+            cpu: "100m"
+            memory: "64Mi"
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 2
+          failureThreshold: 3 # Default
+          successThreshold: 1 # Default
+          timeoutSeconds: 1   # Default
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: clusterip-demo
+spec:
+  type: ClusterIP
+  selector:
+    app: demo
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+      name: http

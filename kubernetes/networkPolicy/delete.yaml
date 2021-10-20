@@ -1,0 +1,35 @@
+apiVersion: networking.k8s.io/v1                  
+kind: NetworkPolicy            
+metadata:                     
+  name: or-policy            
+  namespace: prod
+spec:
+  podSelector:
+    matchLabels:
+      role: db
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          zone: west
+    - podSelector:
+        matchLabels:
+          role: client
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: and-policy
+  namespace: prod
+spec:
+  podSelector:
+    matchLabels:
+      role: db
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          zone: west
+      podSelector:
+        matchLabels:
+          role: client                         

@@ -1,0 +1,113 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: colors
+  labels:
+    ns: colors
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: numbers
+  labels:
+    ns: numbers
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: blue
+  namespace: colors
+  labels:
+    app: colors
+    color: blue
+spec:
+  containers:
+  - image: gcr.io/jetstack-workshops/sample-web:v1
+    name: blue
+    ports:
+    - containerPort: 8080
+  - image: curlimages/curl:7.69.1
+    name: curl
+    command: ["/bin/sh", "-c", "sleep 3000"]
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: green
+  namespace: colors
+  labels:
+    app: colors
+    color: green
+spec:
+  containers:
+  - image: gcr.io/jetstack-workshops/sample-web:v1
+    name: green
+    ports:
+    - containerPort: 8080
+  - image: curlimages/curl:7.69.1
+    name: curl
+    command: ["/bin/sh", "-c", "sleep 3000"]
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: red
+  namespace: colors
+  labels:
+    app: colors
+    color: red
+spec:
+  containers:
+  - image: gcr.io/jetstack-workshops/sample-web:v1
+    name: red
+    ports:
+    - containerPort: 8080
+  - image: curlimages/curl:7.69.1
+    name: curl
+    command: ["/bin/sh", "-c", "sleep 3000"]
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: one
+  namespace: numbers
+  labels:
+    app: numbers
+    number: one
+spec:
+  containers:
+  - image: gcr.io/jetstack-workshops/sample-web:v1
+    name: one
+    ports:
+    - containerPort: 8080
+  - image: curlimages/curl:7.69.1
+    name: curl
+    command: ["/bin/sh", "-c", "sleep 3000"]
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: two
+  namespace: numbers
+  labels:
+    app: numbers
+    number: two
+spec:
+  containers:
+  - image: gcr.io/jetstack-workshops/sample-web:v1
+    name: two
+    ports:
+    - containerPort: 8080
+  - image: curlimages/curl:7.69.1
+    name: curl
+    command: ["/bin/sh", "-c", "sleep 3000"]
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-ingress
+  namespace: colors
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress

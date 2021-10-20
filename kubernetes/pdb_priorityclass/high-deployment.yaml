@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: high
+  labels:
+    app: high
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: high
+  template:
+    metadata:
+      labels:
+        app: high
+    spec:
+      priorityClassName: high-priority
+      containers:
+      - name: high
+        image: k8s.gcr.io/pause
+        resources:
+          requests:
+            cpu: 700m
+          limits:
+            cpu: 700m

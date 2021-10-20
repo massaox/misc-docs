@@ -1,0 +1,20 @@
+# This policy solves item 5
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: blue-to-two
+  namespace: numbers
+spec:
+  podSelector:
+    matchLabels:
+      number: two
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          color: blue
+      namespaceSelector:
+        matchLabels:
+          ns: colors

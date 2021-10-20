@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: red-access
+  namespace: colors
+spec:
+  podSelector:
+    matchLabels:
+      color: red
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          color: blue
+    - namespaceSelector:
+        matchLabels:
+          ns: numbers

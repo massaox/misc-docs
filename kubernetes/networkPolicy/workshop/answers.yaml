@@ -1,0 +1,65 @@
+# This policy solves item 1
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-numbers
+  namespace: colors
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          ns: numbers
+---
+# This policy solves item 2
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-ingress
+  namespace: numbers
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+---
+# This policy solves item 3
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: blue-to-green
+  namespace: colors
+spec:
+  podSelector:
+    matchLabels:
+      color: green
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          color: blue
+---
+# This policy solves item 5
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: red-access
+  namespace: colors
+spec:
+  podSelector:
+    matchLabels:
+      color: red
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          color: blue
+    - namespaceSelector:
+        matchLabels:
+          ns: numbers
